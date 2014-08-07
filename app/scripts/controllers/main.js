@@ -12,7 +12,7 @@ angular.module('dateaEmbedApp')
 .controller('MainCtrl', function ($scope, config, Api, Marker, leafletData, $routeParams, $q, leafletEvents, leafletLayerHelpers, $timeout, $window, $document, Piecluster) {
 
 	var lastMarkerWithFocus
-		, lastMarkerIcon
+	  , lastMarkerIcon
 	  , markersFromApi
 	  , secondaryTags    = []
 	  , statsData
@@ -147,6 +147,7 @@ angular.module('dateaEmbedApp')
 		$scope.main.loading.currentDateoInsideIsLoaded = false;
 	};
 
+	// TODO: Needs a better visualization mgmt
 	$scope.main.vis.showMapVisualization = function () {
 		$scope.main.nav.closeInsidePanel();
 		$scope.main.vis.showMap       = true;
