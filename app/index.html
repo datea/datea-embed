@@ -1,0 +1,95 @@
+<!doctype html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.tmp) styles/vendor.css -->
+
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+	<style>
+		.colored-marker {
+				clip-path: url(#clipping);
+			}
+	</style>
+  </head>
+  <body ng-app="dateaEmbedApp">
+    <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <!-- Add your site or application content here -->
+    <div class="page">
+      <div ng-view=""></div>
+    </div>
+
+
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+     <script>
+       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+       ga('create', 'UA-XXXXX-X');
+       ga('send', 'pageview');
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="bower_components/es5-shim/es5-shim.js"></script>
+    <script src="bower_components/json3/lib/json3.min.js"></script>
+    <![endif]-->
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.4.8/d3.min.js"></script>
+
+    <!-- build:js(./) scripts/vendor.js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-ui-bootstrap-bower/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/leaflet-dist/leaflet.js"></script>
+    <script src="bower_components/angular-leaflet-directive/dist/angular-leaflet-directive.js"></script>
+    <script src="bower_components/Leaflet.label/dist/leaflet.label.js"></script>
+    <script src="bower_components/leaflet.markerclusterer/dist/leaflet.markercluster.js"></script>
+    <script src="bower_components/angular-i18n/angular-locale_es-pe.js"></script>
+    <script src="bower_components/Leaflet.awesome-markers/dist/leaflet.awesome-markers.js"></script>
+    <script src="bower_components/angular-charts/dist/angular-charts.js"></script>
+    <script src="bower_components/da-piecluster/da-piecluster.js"></script>
+    <!-- endbuild -->
+
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="scripts/app.js"></script>
+        <script src="scripts/controllers/main.js"></script>
+        <script src="scripts/services/config.js"></script>
+        <script src="scripts/services/api.js"></script>
+        <script src="scripts/services/marker.js"></script>
+        <script src="scripts/directives/bgfromapi.js"></script>
+<!-- 
+        <script src="scripts/services/piecluster.js"></script>
+         -->
+        <!-- endbuild -->
+
+<!-- clip path for individual markers -->
+<svg height="0" width="0" style="padding:0; margin: 0; position: absolute;">
+  <defs>
+    <clipPath id="pinpath">
+      <!--<path d="M12.499,0.268c-6.782,0-12.282,5.639-12.282,12.597c0,11.026,12.282,18.9,12.282,18.9s12.284-7.678,12.284-18.9C24.783,5.906,19.283,0.268,12.499,0.268"/>-->
+      <path d="M14.499,0C6.492,0,0,7.161,0,15.999C0,30,14.499,40,14.499,40S29,30.248,29,15.999C29,7.161,22.504,0,14.499,0"/>
+    </clipPath>
+  </defs>
+</svg>
+
+</body>
+</html>

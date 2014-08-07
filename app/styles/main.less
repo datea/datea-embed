@@ -1,0 +1,544 @@
+@import "../../bower_components/bootstrap/less/bootstrap.less";
+@import "../../bower_components/leaflet-dist/leaflet.css";
+@import "../../bower_components/Leaflet.label/dist/leaflet.label.css";
+@import "../../bower_components/leaflet.markerclusterer/dist/MarkerCluster.css";
+@import "../../bower_components/leaflet.markerclusterer/dist/MarkerCluster.Default.css";
+@import "../../bower_components/animate.css/animate.css";
+@import "../../bower_components/Leaflet.awesome-markers/dist/leaflet.awesome-markers.css";
+
+.awesome-marker {
+  background: url('../images/markers-soft.png') no-repeat 0 0;
+}
+
+.awesome-marker-shadow {
+  background: url('../images/markers-shadow.png') no-repeat 0 0;
+}
+
+@icon-font-path: "../fonts/";
+    // <link rel="stylesheet" href="bower_components/leaflet-dist/leaflet.css" />
+    // <link rel="stylesheet" href="bower_components/Leaflet.label/dist/leaflet.label.css">
+    // <link rel="stylesheet" href="bower_components/leaflet.markerclusterer/dist/MarkerCluster.css">
+    // <link rel="stylesheet" href="bower_components/leaflet.markerclusterer/dist/MarkerCluster.Default.css">
+
+@color-12: #28BC45; // green
+
+// Global
+
+.part {
+	display: inline-block;
+	vertical-align: top;
+}
+
+.datea-glyph-holder {
+	display: inline-block;
+	vertical-align: top;
+
+	span {
+		display: inline-block;
+		vertical-align: top;
+	}
+	p {
+		display: inline-block;
+		vertical-align: top;
+	}
+}
+
+.datea-glyph {
+	background: @color-12;
+	border-radius: 50%;
+	color: white;
+	font-size: 15px;
+	line-height: 23px;
+	text-align: center;
+	width: 23px!important;
+	top: -2px;
+}
+
+.datea-loading:after {
+	content: " ";
+	background: rgba(255,255,255,.5);
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+}
+
+.datea-icon {
+	width: 20px;
+}
+
+.datea-zoom-control-fix {
+	margin-left: 410px!important;
+}
+
+// Buttons
+
+@datea-brand-btn:  #151415;
+@datea-datear-btn: #8B00A4;
+
+@datea-btn-hover:  #28BC45;
+@datea-btn-color:  #fff;
+@datea-btn-bg:     @datea-brand-btn;
+@datea-btn-border: darken(@datea-btn-bg, 5%);
+
+@datea-datear-btn-hover:  darken(@datea-datear-btn, 10%);
+@datea-datear-btn-color:  #fff;
+@datea-datear-btn-bg:     @datea-datear-btn;
+@datea-datear-btn-border: darken(@datea-datear-btn-bg, 5%);
+
+.datea-button-variant(@color; @background; @border; @hover) {
+  color: @color;
+  background-color: @background;
+  border-color: @border;
+
+  &:hover,
+  &:focus,
+  &:active,
+  &.active,
+  .open .dropdown-toggle& {
+    color: @color;
+    background-color: @hover;
+        border-color: darken(@hover, 12%);
+  }
+  &:active,
+  &.active,
+  .open .dropdown-toggle& {
+    background-image: none;
+  }
+  &.disabled,
+  &[disabled],
+  fieldset[disabled] & {
+    &,
+    &:hover,
+    &:focus,
+    &:active,
+    &.active {
+      background-color: @background;
+          border-color: @border;
+    }
+  }
+
+  .badge {
+    color: @background;
+    background-color: #fff;
+  }
+}
+
+.datea-label-variant(@color) {
+  background-color: @color;
+  &[href] {
+    &:hover,
+    &:focus {
+      background-color: darken(@color, 10%);
+    }
+  }
+}
+
+.datea-btn {
+  .datea-button-variant(@datea-btn-color; @datea-btn-bg; @datea-btn-border; @datea-btn-hover);
+  padding-top: 10px;
+  text-transform: uppercase;
+}
+
+.datea-datear-btn {
+	.datea-button-variant(@datea-datear-btn-color; @datea-datear-btn-bg; @datea-datear-btn-border; @datea-datear-btn-hover);
+	padding-top: 10px;
+	text-transform: uppercase;
+}
+
+.datea-btn-nopad {
+  .datea-button-variant(@datea-btn-color; @datea-btn-bg; @datea-btn-border; @datea-btn-hover);
+  text-transform: uppercase;
+}
+
+.datea-btn-xs {
+	height: 17px;
+	padding-top: 0;
+}
+
+.datea-tag-btn {
+	background: none;
+	border: none;
+}
+
+// Navbar
+
+.datea-navbar {
+	margin-bottom: 0;
+	z-index: 1;
+
+	.nav-arrows-holder {
+		display: block;
+		left: 50%;
+		position: absolute;
+		width: 110px;
+	}
+}
+.navicon-panel {
+	.make-sm-column(3);
+	background: white;
+	height: 434px;
+	padding: 15px;
+	position: absolute;
+	right: 0;
+	top: 50px;
+
+	.visualization-radios-holder {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	// Animations
+	&.ng-hide-remove {
+		-webkit-animation: slideInRight 0.4s;
+		animation: slideInRight 0.4s;
+	}
+	&.ng-hide-add {
+		-webkit-animation: slideOutRight 0.4s;
+		animation: slideOutRight 0.4s;
+		display: block !important;
+	}
+}
+.info-panel {
+	background: rgba(255,255,255,.9);
+	padding: 15px;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	z-index: 9000;
+
+	// Animations
+	&.ng-hide-remove {
+		-webkit-animation: fadeInDown 0.4s;
+		animation: fadeInDown 0.4s;
+	}
+	&.ng-hide-add {
+		-webkit-animation: fadeOutUp 0.4s;
+		animation: fadeOutUp 0.4s;
+		display: block !important;
+	}
+
+	.info-holder {
+		.user-img {
+			height: 50px;
+			width: 50px;
+		}
+	}
+}
+
+// Teaser panel
+.teaser-panel {
+	.make-sm-column(5);
+	background: white;
+	height: 380px;
+	overflow: scroll;
+	padding: 15px;
+	position: absolute;
+	top: 50px;
+	z-index: 9000;
+
+	// Animations
+	&.ng-hide-remove {
+		-webkit-animation: fadeIn 0.4s;
+		animation: fadeIn 0.4s;
+	}
+	&.ng-hide-add {
+		-webkit-animation: fadeOut 0.4s;
+		animation: fadeOut 0.4s;
+		display: block !important;
+	}
+
+	.teaser-holder {
+
+		.user-img {
+			height: 50px;
+			width: 50px;
+		}
+		.tags-holder {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+
+			.tag {
+				display: inline-block;
+				vertical-align: top;
+			}
+		}
+
+		.stats-holder {
+			display: inline-block;
+			vertical-align: top;
+			width: 210px;
+		}
+
+	}
+}
+
+// Inside panel
+.inside-panel {
+	.make-sm-column(6);
+	background: white;
+	height: 434px;
+	overflow: scroll;
+	padding: 15px;
+	position: absolute;
+	top: 50px;
+	z-index: 9000;
+
+	// Animations
+	&.ng-hide-remove {
+		-webkit-animation: slideInLeft 0.4s;
+		animation: slideInLeft 0.4s;
+	}
+	&.ng-hide-add {
+		-webkit-animation: slideOutLeft 0.4s;
+		animation: slideOutLeft 0.4s;
+		display: block !important;
+	}
+
+	.inside-dateo-holder {
+
+		.user-img {
+			height: 50px;
+			width: 50px;
+		}
+
+		.imgs-holder {
+			.dateo-img {
+				cursor: pointer;
+				height: 100px;
+				position: relative;
+				width: 100px;
+
+				&:hover:after {
+					background: rgba( 255,255,255,0.5 );
+					bottom: 0;
+					color: white;
+					content: "\e015";
+					font-family: 'Glyphicons Halflings';
+					font-size: 50px;
+					line-height: 100px;
+					left: 0;
+					position: absolute;
+					opacity: 0.7;
+					text-align: center;
+					right: 0;
+					top: 0;
+				}
+			}
+			.dateo-img-lg {
+				height: 200px;
+				width: 100%;
+
+				&:hover:after {
+					content: "\e016";
+					font-family: 'Glyphicons Halflings';
+					line-height: 200px;
+				}
+			}
+		}
+
+		.tags-holder {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+
+			.tag {
+				display: inline-block;
+				vertical-align: top;
+			}
+		}
+
+		.stats-holder {
+			display: inline-block;
+			vertical-align: top;
+			width: 210px;
+		}
+		.url-holder {
+			display: inline-block;
+			vertical-align: top;
+			width: 150px;
+		}
+	}
+}
+
+// Search panel
+.searchbox-panel {
+	.make-sm-column(4);
+	background: white;
+	border-radius: 0 0 5px 5px;
+	height: 55px;
+	padding: 10px;
+	position: absolute;
+	right: 0;
+	top: 50px;
+	z-index: 0;
+
+	form {
+		display: inline-block;
+		width: 90%;
+	}
+	.close {
+		position: relative;
+		top: 5px;
+	}
+
+	// Animations
+	&.ng-hide-remove {
+		-webkit-animation: slideInDown 0.4s;
+		animation: slideInDown 0.4s;
+	}
+	&.ng-hide-add {
+		-webkit-animation: slideOutUp 0.4s;
+		animation: slideOutUp 0.4s;
+		display: block !important;
+	}
+}
+
+// Map visualization
+.map-holder {
+
+	// Animations
+	&.ng-hide-remove {
+		-webkit-animation: slideInLeft 0.4s;
+		animation: slideInLeft 0.4s;
+	}
+	&.ng-hide-add {
+		-webkit-animation: slideOutRight 0.4s;
+		animation: slideOutRight 0.4s;
+		display: block !important;
+	}
+}
+
+// DateoWithImages Visualization
+
+.dwimgs-holder {
+	height: 450px;
+	overflow: scroll;
+
+	// Animations
+	&.ng-hide-remove {
+		-webkit-animation: slideInLeft 0.4s;
+		animation: slideInLeft 0.4s;
+	}
+	&.ng-hide-add {
+		-webkit-animation: slideOutRight 0.4s;
+		animation: slideOutRight 0.4s;
+		display: block !important;
+	}
+
+	.dateo-with-image {
+		height: 200px;
+		position: relative;
+		width: 200px;
+
+		p {
+			font-size: 11px;
+			line-height: 11px;
+		}
+
+		.info-holder {
+			margin: 0 0 10px 0;
+
+			h5 {
+				margin: 0;
+			}
+			span {
+				font-size: 12px;
+				line-height: 10px;
+			}
+			.user-img {
+				height: 50px;
+				width: 50px;
+			}
+			.part-2 {
+				width: 120px;
+			}
+		}
+		.cta-holder {
+			a {
+				left: 30px;
+				position: relative;
+				top: -2px;
+			}
+			position: absolute;
+			bottom: 10px;
+		}
+	}
+
+	.overlay {
+		background: rgba( 255, 255, 255, 0.8 );
+		display: none;
+		height: 100%;
+		padding: 10px;
+		position: absolute;
+		width: 100%;
+	}
+	.dateo-with-image:hover > .overlay {
+		display: block;
+	}
+}
+
+// Stats visualization
+.charts-holder {
+	height: 425px;
+	width: 100%;
+
+	.chart {
+		height: 320px;
+		width: 80%;
+
+		.ac-legend {
+			overflow: hidden;
+			position: absolute;
+			right: 40px;
+			width: 250px;
+			top: 90px;
+		}
+	}
+	.charts-select {
+		.make-sm-column(3);
+	}
+}
+
+// Footer - Legend
+
+.footer-holder {
+	height: 20px;
+	position: relative;
+	overflow: hidden;
+
+	&.expandable {
+		background: white;
+		position: relative;
+		z-index: 9999;
+	}
+	.expand-text {
+		left: 94%;
+		position: relative;
+		width: 120px;
+		z-index: 10;
+	}
+	.expand-text:hover {
+		cursor: pointer;
+		text-decoration: underline;
+	}
+
+	.legend-holder {
+		position: relative;
+		top: -20px;
+		.color-holder {
+			display: inline-block;
+			height: 20px;
+			width: 20px;
+		}
+	}
+}
+
+.toRed {
+	background-color: red;
+}
