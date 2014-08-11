@@ -37,15 +37,15 @@ angular.module('dateaEmbedApp')
               , topToDiff : 180
               }
 // // Already in Piecluster config
-, customClustering : { defaultColor         : '#28BC45'
-                     , defaultColor1        : '#CCC'
-                     , clusterIconClassName : 'marker-cluster'
-                     , polygonOptions : { weight      : 1
-                                        , fillColor   : '#999'
-                                        , color       : '#999'
-                                        , fillOpacity : 0.4
-                                        }
-                     }
+// , customClustering : { defaultColor         : '#28BC45'
+//                      , defaultColor1        : '#CCC'
+//                      , clusterIconClassName : 'marker-cluster'
+//                      , polygonOptions : { weight      : 1
+//                                         , fillColor   : '#999'
+//                                         , color       : '#999'
+//                                         , fillOpacity : 0.4
+//                                         }
+//                      }
 , customSVGIcon : { defaultColor : '#28BC45'
                   , className    : 'datea-pin-icon'
                   }
