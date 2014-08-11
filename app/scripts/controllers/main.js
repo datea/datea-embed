@@ -28,6 +28,7 @@ angular.module('dateaEmbedApp')
 	  , focusMarker
 	  , isMainTag
 	  , keepInsidePanelOpen
+	  , openSpiderfy
 	  , parseSecondaryTags
 	  , setupLegendTags
 	  , resetMarkers
@@ -175,7 +176,7 @@ angular.module('dateaEmbedApp')
 
 	$scope.main.toggleZoomImg = function ( givens) {
 		$( givens.target ).toggleClass( 'dateo-img-lg' );
-	}
+	};
 
 	// leafletDirectiveMarker on click
 	$scope.$on( 'leafletDirectiveMarker.click', function ( ev, data ) {
@@ -184,10 +185,6 @@ angular.module('dateaEmbedApp')
 		lastMarkerWithFocus = +data.markerName.replace('marker','');
 		focusMarker( { noZoom: true } );
 		console.log( 'on click lastMarkerWithFocus', lastMarkerWithFocus );
-	} );
-
-	$scope.$on( 'leafletDirectiveMarker.focus', function ( ev, data ) {
-		console.log( 'ev', ev );
 	} );
 
 	// Fix zoom control
@@ -252,11 +249,11 @@ angular.module('dateaEmbedApp')
 		angular.forEach( children, function ( marker ) {
 			angular.forEach( marker.options._tags, function ( tag ) {
 				if ( tag !== $scope.main.campaign.main_tag.tag && !!$scope.main.legend.secondaryTags[tag] ) {
-					// tag = !!$scope.main.legend.secondaryTags[tag] ? tag : 'Otros';
 					if ( angular.isDefined( dataObj[ tag ] ) ) {
 						dataObj[ tag ].value = dataObj[ tag ].value + 1;
+						dataObj[ tag ].ids.push( marker.options._id );
 					} else {
-						dataObj[ tag ] = { label: '#'+tag, value: 1, tag: tag };
+						dataObj[ tag ] = { label: '#'+tag, value: 1, tag: tag, ids: [ marker.options._id ] };
 					}
 				}
 			} );
@@ -279,7 +276,7 @@ angular.module('dateaEmbedApp')
 
 		clusterIcon = new L.DivIcon(
 		{ html      : html
-		, className : Piecluster.config.clusterIconClassName
+		, className : Piecluster.pieclusterConfig.clusterIconClassName
 		, iconSize  : new L.Point(di,di)
 		} );
 
@@ -363,14 +360,14 @@ angular.module('dateaEmbedApp')
 		parseSecondaryTags();
 	};
 
-	buildStats = function ( givens ) {
+	buildStats = function () {
 		Api.stats.getStats( { campaign: $scope.main.campaign.id } )
 		.then( function ( response ) {
 			statsData = { data: response, type: 'pie' };
 			$scope.main.chart.data = response;
 		}, function ( reason ) {
 			console.log( reason );
-		} )
+		} );
 	};
 
 	buildTeaser = function () {
@@ -383,7 +380,7 @@ angular.module('dateaEmbedApp')
 					$scope.main.nav.showTeaserPanel = false;
 				});
 			} );
-		}, function ( reason ) { console.log( reason ) } );
+		}, function ( reason ) { console.log( reason ); } );
 	};
 
 	focusMarker = function ( givens ) {
@@ -392,7 +389,7 @@ angular.module('dateaEmbedApp')
 		  ;
 		lastMarkerIcon = $scope.main.leaflet.markers['marker'+lastMarkerWithFocus].icon;
 		if ( !id ) {
-			!noZoom && ( $scope.main.leaflet.center.zoom = config.defaultStopClusteringAtZoom + 1 );
+			!noZoom && ( $scope.main.leaflet.center.zoom = config.defaultStopClusteringAtZoom + 2 );
 			// Fix center position in favor of Inside Panel
 			leafletData.getMap('embedMap')
 			.then( function ( map ) {
@@ -402,6 +399,8 @@ angular.module('dateaEmbedApp')
 				$scope.main.leaflet.center.lng = $scope.main.leaflet.markers['marker'+lastMarkerWithFocus].lng - ( factor.lng + config.centerFix.topToDiff );
 			} );
 			$scope.main.leaflet.markers['marker'+lastMarkerWithFocus].focus = true;
+			// Open spiderfy
+			$timeout( openSpiderfy, 100 );
 			Marker.resetAllMarkerIcons();
 			$scope.main.leaflet.markers['marker'+lastMarkerWithFocus].icon  = Marker.buildMarkerFocusedIcon($scope.main.leaflet.markers['marker'+lastMarkerWithFocus].icon);
 		} else {
@@ -424,6 +423,35 @@ angular.module('dateaEmbedApp')
 	keepInsidePanelOpen = function () {
 		if ( !$scope.main.nav.showInsidePanel ) {
 			$scope.main.nav.showInsidePanel = true;
+		}
+	};
+
+	openSpiderfy = function () {
+		var markerId
+		  , sliceMarkerIds = []
+		  , slicePosition
+		  ;
+		markerId  = $( $scope.main.leaflet.markers['marker'+lastMarkerWithFocus].icon.html ).find('circle').data('datea-svg-circle-id');
+		// If there is no marker then it must be 'inside' the cluster
+		if ( !$('[data-datea-svg-circle-id="'+markerId+'"]').length ) {
+			// If multiples SVGs
+			if ( $('[data-datea-svg-slice-id]').length > 1 ) {
+				// Fill array with slice Ids
+				$.each( $('[data-datea-svg-slice-id]'), function () {
+					sliceMarkerIds.push( $(this).data('datea-svg-slice-id') );
+				} );
+				// Search for slice position to open
+				$.each( sliceMarkerIds, function ( i,v ) {
+					var idsBySlice = (v+'').split(',');
+					!slicePosition && !!~idsBySlice.indexOf( markerId+'' ) && ( slicePosition = i );
+				} );
+				// Select slice and open marker-cluster parent
+				$( $('[data-datea-svg-slice-id]').get( slicePosition ) ).parents('div.marker-cluster').click();
+				slicePosition = null;
+			} else {
+				// Open marker-cluster parent
+				$('[data-datea-svg-slice-id]').parents('div.marker-cluster').click();
+			}
 		}
 	};
 
@@ -469,8 +497,8 @@ angular.module('dateaEmbedApp')
 
 	$scope.main.leaflet.clusterOptions =
 	{ iconCreateFunction      : buildClusterIcon
-	, polygonOptions          : Piecluster.config.polygonOptions
-	, disableClusteringAtZoom : config.defaultStopClusteringAtZoom
+	, polygonOptions          : Piecluster.pieclusterConfig.polygonOptions
+	// , disableClusteringAtZoom : config.defaultStopClusteringAtZoom
 	};
 
 	if ( $routeParams.campaignName ) {

@@ -37,7 +37,7 @@ angular.module('dateaEmbedApp')
 		angular.forEach( colors, function ( color, i ) {
 			html = html + '<rect height="40" width="'+catWidth+'" fill="'+color+'" x="'+(i*catWidth)+'" />';
 		});
-		html = html + '<circle class="datea-svg-marker-circle" data-datea-id="'+givens.dateo.id+'" cx="14.5" cy="14" r="5" fill="white" />' + '</g></svg>';
+		html = html + '<circle class="datea-svg-marker-circle" data-datea-svg-circle-id="'+givens.dateo.id+'" cx="14.5" cy="14" r="5" fill="white" />' + '</g></svg>';
 
 		return { type        : 'div'
 		       , iconSize    : [29, 40]
@@ -46,17 +46,15 @@ angular.module('dateaEmbedApp')
 		       , labelAnchor : [8, -25]
 		       , html        : html
 		       , className   : config.customSVGIcon.className
-		       }
+		       };
 
 	};
 
 	buildMarkerFocusedIcon = function ( marker ) {
-		var id = +$(marker.html).find('circle').data('datea-id');
-		// $('[data-datea-id="'+id+'"]').parent().parent().attr('stroke','white').attr('stroke-width','5');
-		// $('[data-datea-id="'+id+'"]').parent().prepend( '<path style="z-index:9001;" class="test" stroke="white" stroke-width="5" d="M14.499,0C6.492,0,0,7.161,0,15.999C0,30,14.499,40,14.499,40S29,30.248,29,15.999C29,7.161,22.504,0,14.499,0"/>' )
+		var id = +$(marker.html).find('circle').data('datea-svg-circle-id');
 		$timeout( function () {
-			$('[data-datea-id="'+id+'"]').attr('style','fill:#D62728!important;');
-		} );
+			$('[data-datea-svg-circle-id="'+id+'"]').attr('style','fill:#D62728!important;');
+		}, 200 );
 		return marker;
 	};
 
