@@ -12,11 +12,23 @@ angular.module('dateaEmbedApp')
 		restrict: 'A',
 		link: function postLink(scope, element, attrs) {
 			var img
+        , imgType
+        , defaultImg
 			  , setImg
 			  ;
 
+      imgType = attrs.imgType;
+
+      if (imgType === 'user') {
+        defaultImg = config.defaultImgProfile;
+      }else if (imgType === 'campaign') {
+        defaultImg = config.defaultImgCampaign;
+      }else {
+        defaultImg = config.defaultImgBackground;
+      }
+
 			setImg = function () {
-				img = attrs.bgFromApi ? config.api.imgUrl + attrs.bgFromApi : config.defaultImgBackground;
+				img = attrs.bgFromApi ? config.api.imgUrl + attrs.bgFromApi : defaultImg;
 			};
 
 			attrs.$observe( 'bgFromApi', function () {

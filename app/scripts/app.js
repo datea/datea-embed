@@ -23,7 +23,7 @@ angular
 ])
 .config(function ($routeProvider) {
 	$routeProvider
-	.when('/:campaignName',
+	.when('/:username/:campaignSlug',
 	{ templateUrl: 'views/main.html'
 	, controller: 'MainCtrl'
 	})

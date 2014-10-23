@@ -13,8 +13,8 @@ angular.module('dateaEmbedApp')
 	  , buildMarkerFocusedIcon
 	  , parseFromApi
 	  , filterCampaignTagsFromDateo
-	  , parseTagsNamesFromDateo
 	  , resetAllMarkerIcons
+    , idxToDateoId
 	  ;
 
 	buildMarkerIcon = function ( givens ) {
@@ -25,19 +25,21 @@ angular.module('dateaEmbedApp')
 		  , secondaryTags = givens && givens.secondaryTags
 		  ;
 
-		angular.forEach( dateo.tags, function ( value, key ) {
-			!!secondaryTags[value.tag] && ( colors.push( secondaryTags[value.tag].color ) );
+		angular.forEach( dateo.tags, function ( tag ) {
+			!!secondaryTags[tag] && ( colors.push( secondaryTags[tag].color ) );
 		});
 
 		colors.length || ( colors.push( config.customSVGIcon.defaultColor ) );
 		catWidth = ( 29 / colors.length );
 
-		// html = '<svg width="29" height="40"><g style="clip-path: url(#pinpath);">';
-		html = '<svg width="29" height="40"><g style="clip-path: url(#pinpath);">';
-		angular.forEach( colors, function ( color, i ) {
-			html = html + '<rect height="40" width="'+catWidth+'" fill="'+color+'" x="'+(i*catWidth)+'" />';
-		});
-		html = html + '<circle class="datea-svg-marker-circle" data-datea-svg-circle-id="'+givens.dateo.id+'" cx="14.5" cy="14" r="5" fill="white" />' + '</g></svg>';
+    html = '<svg width="'+config.customSVGIcon.markerWidth+'" height="'+config.customSVGIcon.markerHeight+'"><g style="clip-path: url(#pinpath);">';
+    angular.forEach(colors, function (color, i) {
+      html = html + '<rect height="'+config.customSVGIcon.markerHeight+'" width="'+parseInt(Math.ceil(catWidth))+'" fill="'+color+'" x="'+parseInt(Math.ceil(i*catWidth))+'" />';
+    });
+    html = html
+         + '<circle cx="14.5" cy="13" r="4" fill="white" />'
+         + '<path class="datea-svg-marker-border datea-svg-marker-border-'+givens.dateo.id+'" d="'+config.customSVGIcon.markerSvgPath+'" stroke="#777777" fill="none" stroke-width="0" />'
+         + '</g></svg>';
 
 		return { type        : 'div'
 		       , iconSize    : [29, 40]
@@ -47,19 +49,18 @@ angular.module('dateaEmbedApp')
 		       , html        : html
 		       , className   : config.customSVGIcon.className
 		       };
-
 	};
 
 	buildMarkerFocusedIcon = function ( marker ) {
-		var id = +$(marker.html).find('circle').data('datea-svg-circle-id');
+    var id = marker._id;
 		$timeout( function () {
-			$('[data-datea-svg-circle-id="'+id+'"]').attr('style','fill:#D62728!important;');
+			$('.datea-svg-marker-border-'+id).attr('stroke','white').attr('stroke-width', '2');
 		}, 200 );
 		return marker;
 	};
 
 	resetAllMarkerIcons = function () {
-		$('.datea-svg-marker-circle').removeAttr('style');
+		$('.datea-svg-marker-border').attr('stroke', '#777777').attr('stroke-width', 0);
 	};
 
 	filterCampaignTagsFromDateo = function ( givens ) {
@@ -68,21 +69,11 @@ angular.module('dateaEmbedApp')
 		  , campaignTags = givens && givens.campaignTags
 		  ;
 
-		angular.forEach( dateoTags, function ( value, key ) {
-			!!campaignTags[ value.tag ] && ( filteredTags.push( '#'+value.tag ) );
+		angular.forEach( dateoTags, function ( tag ) {
+			!!campaignTags[ tag ] && ( filteredTags.push( '#'+tag ) );
 		});
 
 		return filteredTags;
-	};
-
-	parseTagsNamesFromDateo = function ( givens ) {
-		var tagsNames = []
-		  , dateoTags = givens && givens.tags
-		  ;
-		angular.forEach( dateoTags, function ( value, key ) {
-			tagsNames.push( value.tag );
-		});
-		return tagsNames;
 	};
 
 	parseFromApi = function ( givens ) {
@@ -90,29 +81,27 @@ angular.module('dateaEmbedApp')
 		var markers           = {}
 		  , sessionMarkersIdx = 0
 		  , dateos            = givens.dateos
-		  , campaign          = givens.campaign
+		  //, campaign          = givens.campaign
 		  , colors            = givens && givens.colors
 		  , markersBounds     = []
 		  ;
 
 		angular.forEach( dateos, function ( value ) {
 			// Defaults
-			value.user.image_small = value.user.image_small
-			? value.user.image_small
-			: config.defaultImgProfile;
+			value.user.image_small = value.user.image_small ? value.user.image_small : config.defaultImgProfile;
 			value._prettyDate = $filter('date')( value.date, 'fullDate' );
 			// Build Marker
 			markers['marker'+sessionMarkersIdx] = {
 			  lat         : value.position.coordinates[1]
 			, lng         : value.position.coordinates[0]
-			, group       : campaign.main_tag.tag
+			, group       : 'embedCluster'
 			, label       : { message: filterCampaignTagsFromDateo( { tags: value.tags, campaignTags: colors } ).join(',') }
 			// , message     : $interpolate( config.marker )(value)
 			, draggable   : false
 			, focus       : false
 			, icon        : buildMarkerIcon( { dateo: value, secondaryTags: colors } )
 			, riseOnHover : true
-			, _tags       : parseTagsNamesFromDateo( { tags: value.tags } )
+			, _tags       : value.tags
 			, _id         : value.id
 			};
 			// console.log( 'Marker labels', filterCampaignTagsFromDateo( { tags: value.tags, campaignTags: colors } ).join(','), colors );
@@ -122,12 +111,12 @@ angular.module('dateaEmbedApp')
 		return { markers           : markers
 		       , markersBounds     : markersBounds
 		       , sessionMarkersIdx : sessionMarkersIdx
+           , idxToDateoId      : idxToDateoId
 		       };
 	};
 
 	return { parseFromApi                : parseFromApi
 	       , filterCampaignTagsFromDateo : filterCampaignTagsFromDateo
-	       , parseTagsNamesFromDateo     : parseTagsNamesFromDateo
 	       , buildMarkerFocusedIcon      : buildMarkerFocusedIcon
 	       , resetAllMarkerIcons         : resetAllMarkerIcons
 	       };

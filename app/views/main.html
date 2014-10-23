@@ -1,66 +1,89 @@
 <div class="main-holder" ng-class="{ 'datea-loading': main.loading.campaignIsLoaded }">
 	<nav class="navbar navbar-default datea-navbar" role="navigation">
 		<div class="container-fluid">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="{{main.redirUrl + 'tag/' + main.campaign.name}}" target="_blank">#{{main.campaign.main_tag.tag}}</a>
+			<div class="navbar-header ff1">
+				<!--<a class="navbar-brand" href="{{main.redirUrl + 'tag/' + main.campaign.name}}" target="_blank">
+          <img src="images/globals/logo2.png" alt="Datea" /><span class="nav-title">#{{main.campaign.main_tag.tag}}</span>
+        </a>-->
+        <a class="navbar-brand" href ng-click="main.nav.toggleInfoPanel()">
+          <img src="images/globals/logo2.png" alt="Datea" /><span class="nav-title">#{{main.campaign.main_tag.tag}}</span>
+        </a>
 			</div>
 			<div class="nav-arrows-holder" ng-show="main.vis.showMap">
-				<button type="button" class="btn btn-default btn-lg" ng-click="main.navArrows.prev()">
-					<i class="fa fa-chevron-left"></i>
+				<button type="button" class="btn btn-icon btn-default btn-lg" ng-click="main.navArrows.prev()">
+					<i class="fa fa-chevron-left"></i> anterior
 				</button>
-				<button type="button" class="btn btn-default btn-lg" ng-click="main.navArrows.next()">
-					<i class="fa fa-chevron-right"></i>
+				<button type="button" class="btn btn-icon btn-default btn-lg" ng-click="main.navArrows.next()">
+					siguiente <i class="fa fa-chevron-right"></i>
 				</button>
 			</div>
 			<ul class="nav navbar-nav navbar-right">
 				<li>
-					<button type="button" class="btn btn-default btn-lg" ng-click="main.nav.toggleSearchBoxPanel()">
+          <a class="btn btn-datear btn-default" href="{{main.campaignUrl}}" target="_blank" data-toggle="tooltip" title="Datear en datea.pe">DATEA <i class="datea-icon icon-burbuja"></i></a>
+        </li>
+        <li>
+					<button type="button" class="btn btn-icon btn-default btn-lg" ng-click="main.nav.toggleSearchBoxPanel()">
 						<i class="fa fa-search"></i>
 					</button>
 				</li>
-				<li>
+				<!--<li>
 					<button type="button" class="btn btn-default btn-lg" ng-click="main.nav.toggleInfoPanel()">
 						<i class="fa fa-info-circle"></i>
 					</button>
-				</li>
+				</li>-->
 				<li>
-					<button type="button" class="btn btn-default btn-lg" ng-click="main.nav.toggleNaviconPanel()">
+					<button type="button" class="btn btn-icon btn-default btn-lg" ng-click="main.nav.toggleNaviconPanel()">
 						<i class="fa fa-bars"></i>
 					</button>
 				</li>
 			</ul>
 		</div>
 	</nav>
-	<div class="map-holder" ng-show="main.vis.showMap">
-		<leaflet class="datea-leaflet-map" id="embedMap" defaults="main.leaflet.defaults" bounds="main.leaflet.bounds" markers="main.leaflet.markers" center="main.leaflet.center" cluster-options="main.leaflet.clusterOptions" width="100%" height="428px"></leaflet>
+	<div class="map-holder" ng-show="main.vis.showMap" da-loading="main.loading.map">
+		<leaflet class="datea-leaflet-map" id="embedMap" defaults="main.leaflet.defaults" bounds="main.leaflet.bounds" markers="main.leaflet.markers" center="main.leaflet.center" cluster-options="main.leaflet.clusterOptions" tiles="main.leaflet.tiles"></leaflet>
 	</div>
-	<div class="dwimgs-holder" ng-show="main.vis.showImg">
-		<div class="part dateo-with-image" bg-from-api="{{dateoWithImage.images[0].image}}" ng-repeat="dateoWithImage in main.dateosWithImages">
-			<div class="overlay">
-				<div class="info-holder parts-holder">
-					<div class="part part-1">
-						<div class="user-img" bg-from-api="{{dateoWithImage.user.image}}"></div>
-					</div>
-					<div class="part part-2">
-						<h5>{{dateoWithImage.user.username}}</h5>
-						<span class="date">{{dateoWithImage.date | date:'fullDate'}}</span>
-					</div>
-				</div>
-				<p class="extract">{{dateoWithImage.extract}}</p>
-				<div class="cta-holder">
-					<span class="glyphicon glyphicon-thumbs-up"></span> {{dateoWithImage.vote_count}}
-					<span class="glyphicon glyphicon-comment"></span> {{dateoWithImage.comments.length}}
-					<a href="" class="btn datea-btn datea-btn-xs" ng-click="main.dwi.openInsidePanel( dateoWithImage )">ver más</a>
-				</div>
-			</div>
-		</div>
+	<div class="dwimgs-holder dateo-thumbs-holder" ng-show="main.vis.showImg">
+		<div class="dateo-thumb" ng-repeat="dateo in main.dateosWithImages">
+      <div class="inner">
+        <div class="img-holder" bg-from-api="{{dateo.images[0].image}}"></div>
+        <div class="info-bg"></div>
+        <div class="info-holder">
+          <div class="parts-holder">
+            <div class="part part-1">
+              <div class="user-img img-circle" bg-from-api="{{dateo.user.image_small}}" img-type="user"></div>
+            </div>
+            <div class="part part-2">
+              <h5>{{dateo.user.username}}</h5>
+              <div class="date">{{dateo.date | date:'fullDate'}}</div>
+            </div>
+          </div>
+          <p class="extract" ng-bind-html="dateo.extract | linky:'_blank'"></p>
+          <div class="stat-holder">
+            <span class="stat" ng-show="dateo.vote_count"><i class="glyphicon glyphicon-thumbs-up"></i> {{dateo.vote_count}}</span>
+            <span class="stat" ng-show="dateo.comments.length"><i class="glyphicon glyphicon-comment"></i> {{dateo.comments.length}}</span>
+            <span class="stat" ng-show="dateo.redateo_count"><i class="glyphicon glyphicon-retweet"></i> {{dateo.redateo_count}}</span>
+            <a href="{{main.redirUrl}}{{dateo.user.username}}/dateos/{{dateo.id}}" class="btn datea-btn btn-xs pull-right">ver detalle</a>
+          </div>
+        </div>
+      </div>
+    </div>
 	</div>
-	<div class="charts-holder" ng-show="main.vis.showCharts" ng-if="main.chart.render.loaded">
-		<select class="form-control pull-right charts-select" ng-model="main.chart.controlType">
-			<option value="pie" ng-selected="true">pie</option>
-			<option value="bar">barras</option>
-		</select>
-		<div class="chart" ac-chart="main.chart.render.type" ac-data="main.chart.render" ac-config="main.chart.render.config"></div>
+	<div class="charts-holder" ng-show="main.vis.showCharts">
+		<div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="inner">
+            <div class="chart-type-select pull-right">
+              <select class="form-control" ng-model="main.chart.controlType">
+                <option value="pie" selected="selected">Pie</option>
+                <option value="bar">Barras</option>
+              </select>
+            </div>
+            <div data-ac-chart="main.chart.render.type" data-ac-data="main.chart.render" data-ac-config="main.chart.render.config" class="vis-simple-chart"></div>
+          </div>
+        </div>
+      </div>
+    </div>
 	</div>
 	<div class="timeline-holder" ng-show="main.vis.showTimeline">
 		<h4>sup</h4>
@@ -103,95 +126,95 @@
 		</ul>
 	</div>
 	<div class="info-panel" ng-show="main.nav.showInfoPanel">
-		<button type="button" class="close pull-right" ng-click="main.nav.toggleInfoPanel()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-		<div class="info-holder">
-			<div class="user-info-holder">
-				<div class="part part-1">
-					<div class="user-img" bg-from-api="{{main.campaign.user.image_small}}"></div>
-				</div>
-				<div class="part part-2">
-					{{main.campaign.user.username}}
-				</div>
-				<div class="part part-3">
-					{{main.campaign.modified | date:'fullDate'}}
-				</div>
-			</div>
-			<div class="main-info-holder">
-				<h2>{{main.campaign.name}}</h2>
-				<a href="{{main.redirUrl + 'tag/' + main.campaign.main_tag.tag}}">#{{main.campaign.main_tag.tag}}</a>
-				<p>{{main.campaign.short_description}}</p>
-			</div>
-			<div class="stats-holder">
-				<div class="datea-glyph-holder">
-					<span class="glyphicon glyphicon-thumbs-up datea-glyph"></span> <span class="datea-glyph-text"><p>{{main.campaign.dateo_count}}</p> <p><ng-pluralize count="main.campaign.dateo_count" when="{'one':
-						'dateo','other':'dateos'}"></p></span>
-				</div>
-				<div class="datea-glyph-holder">
-					<span class="glyphicon glyphicon-comment datea-glyph"></span> <span class="datea-glyph-text"><p>{{main.campaign.follow_count}}</p><p><ng-pluralize count="main.campaign.follow_count" when="{'one':
-						'seguidor','other':'seguidores'}"></p></span>
-				</div>
-			</div>
-			<div class="extra-info-holder">
-				<h4>Objetivos</h4>
-				<p>{{main.campaign.mission}}</p>
-				<h4>Qué pasará con la información?</h4>
-				<p>{{main.campaign.information_destiny}}</p>
-			</div>
-			<div class="cta-holder">
-				<a href="{{main.redirUrl + main.campaign.user.username + '/' + main.campaign.main_tag.tag }}" class="btn datea-btn">Ver en Datea</a>
-			</div>
-		</div>
+    <div class="inner-content">
+  		<button type="button" class="close pull-right" ng-click="main.nav.toggleInfoPanel()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+  		<div class="info-holder">
+  			<div class="user-head">
+          <img class="user-img img-circle" ng-src="{{main.campaign.user.image_small ? main.imgUrl + main.campaign.user.image_small : main.defaultImgProfile}}"/>
+          <div class="user-info">
+            <div class="intro-line">una iniciativa de</div>
+            <h4 class="username"><a href="{{main.redirUrl}}{{main.campaign.user.username}}" target="_blank">{{main.campaign.user.username}}</a></h4>
+          </div>
+        </div>
+  			<div class="main-info-holder">
+  				<h2>{{main.campaign.name}}</h2>
+  				<a class="main-tag" href="{{main.redirUrl + 'tag/' + main.campaign.main_tag.tag}}">#{{main.campaign.main_tag.tag}}</a>
+  				<p class="short-description">{{main.campaign.short_description}}</p>
+  			</div>
+  			<div class="stats-holder">
+  				<div class="datea-glyph-holder">
+  					<i class="datea-icon icon-burbuja"></i> <span class="datea-glyph-text"><span class="num">{{main.campaign.dateo_count}}</span> <span class="num-label"><ng-pluralize count="main.campaign.dateo_count" when="{'one':'dateo','other':'dateos'}"></ng-pluralize></span></span>
+  				</div>
+  				<div class="datea-glyph-holder">
+  					<i class="fa fa-user"></i> <span class="datea-glyph-text"><span class="num">{{main.campaign.follow_count}}</span> <span class="num-label"><ng-pluralize count="main.campaign.follow_count" when="{'one':'seguidor','other':'seguidores'}"></ng-pluralize></span></span>
+  				</div>
+  			</div>
+  			<div class="extra-info-holder">
+  				<h4>Objetivos</h4>
+  				<p>{{main.campaign.mission}}</p>
+  				<h4>Qué pasará con la información?</h4>
+  				<p>{{main.campaign.information_destiny}}</p>
+  			</div>
+  			<div class="cta-holder">
+          <button type="button" class="btn btn-default" ng-click="main.nav.toggleInfoPanel()"><i class="glyphicon glyphicon-chevron-left"></i> regresar</button> &nbsp;
+          <a href="{{main.redirUrl + main.campaign.user.username + '/' + main.campaign.main_tag.tag }}" class="btn datea-btn">Ver en Datea</a>
+          <span class="help-info">para datear y acceder a la versión completa.</span>
+  			</div>
+  		</div>
+    </div>
 	</div>
-	<div class="teaser-panel" ng-show="main.nav.showTeaserPanel">
+	<div class="teaser-panel col-xs-12 col-sm-5 col-md-4 col-lg-3" ng-show="main.nav.showTeaserPanel">
 		<button type="button" class="close pull-right" ng-click="main.nav.showTeaserPanel = false"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-		<div class="teaser-holder">
+		<div class="teaser-holder dateo dateo-teaser">
 			<h5>Último dateo</h5>
-			<div class="user-info-holder">
-				<div class="part part-1">
-					<div class="user-img" bg-from-api="{{main.dateoTeaser.user.image_small}}"></div>
-				</div>
-				<div class="part part-2">
-					{{main.dateoTeaser.user.username}}
-				</div>
-				<div class="part part-3">
-					{{main.dateoTeaser.modified | date:'fullDate'}}
-				</div>
-			</div>
+			<div class="user-head">
+        <img class="user-img img-circle" ng-src="{{main.dateoTeaser.user.image_small ? main.imgUrl + main.dateoTeaser.user.image_small : main.defaultImgProfile}}"/>
+        <div class="user-info">
+          <h4 class="username"><a href="{{main.redirUrl}}{{main.dateoTeaser.user.username}}" target="_blank">{{main.dateoTeaser.user.username}}</a></h4>
+          <div class="date"><a href="{{main.redirUrl}}{{main.dateoTeaser.user.username}}/dateos/{{main.dateoTeaser.id}}" target="_blank">{{main.dateoTeaser.created | date:dateFormat}}</a></div>
+        </div>
+        <div class="admin-info">
+          <div class="label admin-status" ng-show="flow.status" ng-class="{'label-success': flow.status.type === 'solved', 'label-info': flow.status.type === 'reviewed'}">{{flow.status.msg}}</div>
+        </div>
+      </div>
 			<ul class="tags-holder">
 				<li class="tag datea-tag" ng-repeat="tag in main.dateoTeaser.tags">
-					<a href="{{main.redirUrl + 'tag/' + tag.tag}}" target="_blank">#{{tag.tag}}</a>
+					<a href="{{main.redirUrl + 'tag/' + tag}}" target="_blank">#{{tag}}</a>
 				</li>
 			</ul>
-			<p class="content">{{main.dateoTeaser.content}}</p>
-			<div class="stats-holder">
-				<div class="datea-glyph-holder">
-					<span class="glyphicon glyphicon-thumbs-up datea-glyph"></span> <span class="datea-glyph-text"><p>{{main.dateoTeaser.vote_count}}</p> <p><ng-pluralize count="main.dateoTeaser.vote_count" when="{'one':
-						'apoyo','other':'apoyos'}"></p></span>
+			<p class="content">{{main.dateoTeaser.extract}}</p>
+			<div class="stats-holder" ng-show="main.currentDateoInside.vote_count > 0 && main.currentDateoInside.comment_count > 0">
+				<div class="datea-glyph-holder" ng-show="main.currentDateoInside.vote_count > 0">
+					<span class="glyphicon glyphicon-thumbs-up datea-glyph"></span> <span class="datea-glyph-text">{{main.dateoTeaser.vote_count}}</span>
 				</div>
-				<div class="datea-glyph-holder">
-					<span class="glyphicon glyphicon-comment datea-glyph"></span> <span class="datea-glyph-text"><p>{{main.dateoTeaser.comments.length}}</p><p><ng-pluralize count="main.dateoTeaser.comments.length" when="{'one':
-						'comentario','other':'comentarios'}"></p></span>
+				<div class="datea-glyph-holder" ng-show="main.currentDateoInside.comment_count > 0">
+					<span class="glyphicon glyphicon-comment datea-glyph"></span> <span class="datea-glyph-text">{{main.dateoTeaser.comment_count}}</span>
 				</div>
 			</div>
+      <div class="action-btns">
+        <a href ng-click="main.openTeaserDetail()">ver detalle</a>
+        <a href ng-click="main.navArrows.next()">ver siguiente <i class="glyphicon glyphicon-chevron-right"></i></a>
+      </div>
 		</div>
 	</div>
-	<div class="inside-panel" ng-class="{ 'datea-loading': main.loading.currentDateoInsideIsLoaded }" ng-show="main.nav.showInsidePanel">
+	<div class="inside-panel col-xs-12 col-sm-6 col-md-5 col-lg-4" ng-class="{ 'datea-loading': main.loading.currentDateoInsideIsLoaded }" ng-show="main.nav.showInsidePanel">
 		<button type="button" class="close pull-right" ng-click="main.nav.toggleInsidePanel()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-		<div class="inside-dateo-holder">
-			<div class="user-info-holder">
-				<div class="part part-1">
-					<div class="user-img" bg-from-api="{{main.currentDateoInside.user.image_small}}"></div>
-				</div>
-				<div class="part part-2">
-					{{main.currentDateoInside.user.username}}
-				</div>
-				<div class="part part-3">
-					{{main.currentDateoInside.modified | date:'fullDate'}}
-				</div>
-			</div>
+		<div class="inside-dateo-holder dateo dateo-detail">
+
+      <div class="user-head">
+        <img class="user-img img-circle" ng-src="{{main.currentDateoInside.user.image_small ? main.imgUrl + main.currentDateoInside.user.image_small : main.defaultImgProfile}}"/>
+        <div class="user-info">
+          <h4 class="username"><a href="{{main.redirUrl}}{{main.currentDateoInside.user.username}}">{{main.currentDateoInside.user.username}}</a></h4>
+          <div class="date"><a href="{{main.redirUrl}}{{main.currentDateoInside.user.username}}/dateos/{{main.currentDateoInside.id}}">{{main.currentDateoInside.created | date:dateFormat}}</a></div>
+        </div>
+        <div class="admin-info">
+          <div class="label admin-status" ng-show="flow.status" ng-class="{'label-success': flow.status.type === 'solved', 'label-info': flow.status.type === 'reviewed'}">{{flow.status.msg}}</div>
+        </div>
+      </div>
+
 			<ul class="tags-holder">
 				<li class="tag datea-tag" ng-repeat="tag in main.currentDateoInside.tags">
-					<a href="{{main.redirUrl + 'tag/' + tag.tag}}" target="_blank">#{{tag.tag}}</a>
+					<a href="{{main.redirUrl + 'tag/' + tag}}" target="_blank">#{{tag}}</a>
 				</li>
 			</ul>
 			<div class="imgs-holder">
@@ -199,16 +222,19 @@
 			</div>
 			<p class="content">{{main.currentDateoInside.content}}</p>
 			<div class="stats-holder">
-				<div class="datea-glyph-holder">
-					<span class="glyphicon glyphicon-thumbs-up datea-glyph"></span> <span class="datea-glyph-text"><p>{{main.currentDateoInside.vote_count}}</p> <p><ng-pluralize count="main.currentDateoInside.vote_count" when="{'one':
-						'apoyo','other':'apoyos'}"></p></span>
+				<div class="datea-glyph-holder" ng-show="main.currentDateoInside.vote_count > -1">
+					<span class="glyphicon glyphicon-thumbs-up datea-glyph"></span> <span class="datea-glyph-text">{{main.currentDateoInside.vote_count}}</span>
 				</div>
-				<div class="datea-glyph-holder">
-					<span class="glyphicon glyphicon-comment datea-glyph"></span> <span class="datea-glyph-text"><p>{{main.currentDateoInside.comments.length}}</p><p><ng-pluralize count="main.currentDateoInside.comments.length" when="{'one':
-						'comentario','other':'comentarios'}"></p></span>
+				<div class="datea-glyph-holder" ng-show="main.currentDateoInside.comment_count > 0">
+					<span class="glyphicon glyphicon-comment datea-glyph"></span> <span class="datea-glyph-text">{{main.currentDateoInside.comments.length}}</span>
 				</div>
+        <div class="datea-glyph-holder" ng-show="main.currentDateoInside.redateo_count > -1">
+          <span class="glyphicon glyphicon-retweet datea-glyph"></span> <span class="datea-glyph-text">{{main.currentDateoInside.redateo_count}}</span>
+        </div>
 			</div>
 			<div class="url-holder pull-right">
+        <a class="btn btn-default btn-xs" target="_blank" href="{{main.redirUrl + main.currentDateoInside.user.username + '/dateos/' + main.currentDateoInside.id}}">ver en Datea</a>
+        <!--
 				<div class="form-group share">
 					<div class="input-group">
 						<input type="text" class="form-control" value="{{main.redirUrl + main.currentDateoInside.user.username + '/dateos/' + main.currentDateoInside.id}}">
@@ -216,30 +242,34 @@
 							<button class="btn btn-default" type="button" ng-click="main.currentDateoInside.share()"><i class="glyphicon glyphicon-share"></i></button>
 						</span>
 					</div>
-				</div>
+				</div-->
 			</div>
 			<div class="comments-holder">
-				<h4 ng-show="main.currentDateoInside.comments">Comentarios</h4>
-				<div class="comment-holder" ng-repeat="comment in main.currentDateoInside.comments">
-					<div class="user-info-holder part part-1">
-						<div class="user-img" bg-from-api="{{comment.user.image_small}}"></div>
-					</div>
-					<div class="part part-2">
-						<a href="{{main.redirUrl + comment.user.username}}">{{comment.user.username}}</a>
-					</div>
-					<div class="part part-3">
-						el {{comment.created | date:'fullDate'}}
-					</div>
-					<p>{{comment.comment}}</p>
-				</div>
-			</div>
+        <h3 ng-show="main.currentDateoInside.comments.length > 0">Comentarios</h3>
+
+        <div class="comments">
+          <div class="comment-holder" ng-repeat="comment in main.currentDateoInside.comments" ng-class="{'slidedown': comment.new}" da-on-last-repeat="slideDownComments()">
+            <div class="user">
+              <img class="img-circle" ng-src="{{comment.user.image_small ? main.imgUrl + comment.user.image_small : main.defaultUserImg}}" alt="{{comment.user.username}}">
+              <a href="{{main.redirUrl}}{{comment.user.username}}"><span>{{comment.user.username}}</span></a>
+              <span class="date">el {{comment.created | date:dateFormat}}</span>
+            </div>
+
+            <p class="comment-content newline2br" ng-bind-html="comment.comment | linky:'_blank'"></p>
+
+            <div class="denounce-holder">
+              <da-flag flag-id="comment.id" flag-obj-type="comment"></da-flag>
+            </div>
+          </div>
+        </div>
+      </div>
 		</div>
 	</div>
 	<div class="searchbox-panel" ng-show="main.nav.showSearchBoxPanel">
 		<form ng-submit="main.searchBox.search()">
 			<div class="form-group searchbox">
 				<div class="input-group">
-					<input id="sup" type="text" class="form-control" value="" ng-model="main.searchBox.keyword">
+					<input id="sup" type="text" class="form-control" value="" ng-model="main.searchBox.keyword" placeholder="buscar frase">
 					<span class="input-group-btn">
 						<button class="btn btn-default" type="button" ng-click="main.searchBox.search()"><i class="glyphicon glyphicon-search"></i></button>
 					</span>
@@ -248,15 +278,20 @@
 		</form>
 		<button type="button" class="close" ng-click="main.nav.toggleSearchBoxPanel()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 	</div>
-	<div class="footer-holder">
+	<div class="footer-holder" ng-class="{'expanded': main.isLegendExpanded}">
 		<div class="legend-holder" ng-show="main.vis.showMap">
-			<div class="legend-tag part" ng-repeat="tag in main.campaign.secondary_tags">
-				<span class="color-holder" ng-style="{'background-color':'{{main.legend.secondaryTags[tag.tag].color}}'}"></span>
-				<span class="tag-name">{{tag.tag}}</span>
-			</div>
+      <a class="legend-expand-link" href ng-click="main.toggleExpandLegend()">{{main.legendExpandLinkText}}</a>
+      <div class="legend-tags">
+  			<div class="legend-tag part" ng-repeat="tag in main.campaign.secondary_tags" da-on-last-repeat="main.setupLegendTags()">
+  				<span class="color-holder" ng-style="{'background-color':'{{main.legend.secondaryTags[tag.tag].color}}'}"></span>
+  				<span class="tag-name">{{tag.tag}}</span>
+  			</div>
+      </div>
 		</div>
-		<a href="//datea.pe" target="_blank">
+    <!--
+		<a class="logo-footer" href="//datea.pe/#!{{main.campaign.user.username}}/{{main.campaign.slug}}" target="_blank">
 			<img class="datea-icon pull-right" src="images/globals/icon.png" alt="Datea">
 		</a>
+    -->
 	</div>
 </div>

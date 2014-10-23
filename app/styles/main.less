@@ -5,6 +5,7 @@
 @import "../../bower_components/leaflet.markerclusterer/dist/MarkerCluster.Default.css";
 @import "../../bower_components/animate.css/animate.css";
 @import "../../bower_components/Leaflet.awesome-markers/dist/leaflet.awesome-markers.css";
+@import "fontcustom.css";
 
 .awesome-marker {
   background: url('../images/markers-soft.png') no-repeat 0 0;
@@ -14,45 +15,114 @@
   background: url('../images/markers-shadow.png') no-repeat 0 0;
 }
 
+@font-face {
+  font-family: "HelveticaLTSTD-Cond";
+  src: url("../fonts/helveticaltstd-cond/HelveticaLTStd-Cond.eot"),
+  url("../fonts/helveticaltstd-cond/HelveticaLTStd-Cond.woff") format("woff"),
+  url("../fonts/helveticaltstd-cond/HelveticaLTStd-Cond.ttf") format("truetype"),
+  url("../fonts/helveticaltstd-cond/HelveticaLTStd-Cond.svg") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "OldSansBlack";
+  src: url("../fonts/oldsansblack/OldSansBlack.eot"),
+  url("../fonts/oldsansblack/OldSansBlack.woff") format("woff"),
+  url("../fonts/oldsansblack/OldSansBlack.ttf") format("truetype"),
+  url("../fonts/oldsansblack/OldSansBlack.svg") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@ff1 : "HelveticaLTSTD-Cond", sans-serif;
+.ff1 {
+  font-family: @ff1;
+  font-weight: normal;
+  font-style: normal;
+}
+
+.ff2 {
+  font-family: "OldSansBlack", sans-serif;
+  font-weight: normal;
+  font-style: normal;
+}
+
 @icon-font-path: "../fonts/";
     // <link rel="stylesheet" href="bower_components/leaflet-dist/leaflet.css" />
     // <link rel="stylesheet" href="bower_components/Leaflet.label/dist/leaflet.label.css">
     // <link rel="stylesheet" href="bower_components/leaflet.markerclusterer/dist/MarkerCluster.css">
     // <link rel="stylesheet" href="bower_components/leaflet.markerclusterer/dist/MarkerCluster.Default.css">
 
-@color-12: #28BC45; // green
+@green         : #28BC45; // green
+@gray-light-1  : #ECEFEE; // 15
+@gray-light-2  : #a9b4af; // 18
+@gray-light-3  : #909E97; // 10
+@gray-light-4  : #D3DAD7; // 3
+@gray-light-5  : #c1c9c5; // 19
+
+@text-gray-1   : #5E6E66; // 0
 
 // Global
+
+html, body, .page, .ng-view-holder, .main-holder {height: 100%}
+@footer-height : 28px;
+@navbar-height : 52px;
+
+a {
+  color: @green;
+  &:hover {
+    color: darken(@green, 15%);
+  }
+}
+
+.tags-holder {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  .tag {
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 10px;
+    margin-bottom: 3px;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
 
 .part {
 	display: inline-block;
 	vertical-align: top;
 }
 
-.datea-glyph-holder {
-	display: inline-block;
-	vertical-align: top;
-
-	span {
-		display: inline-block;
-		vertical-align: top;
-	}
-	p {
-		display: inline-block;
-		vertical-align: top;
-	}
+.dateo-actions {
+  padding-bottom: 10px;
+}
+.stats-holder {
+  .clearfix();
+  .datea-glyph-holder {
+    margin-right: 20px;
+    float: left;
+    color: @gray-light-3;
+    .datea-glyph-text {
+      margin-left: 2px;
+    }
+    /*.datea-glyph, .fa {
+      line-height: 32px;
+      height: 32px;
+      width: 32px;
+      font-size: 16px;
+    }
+    .datea-glyph-text {
+      right: 0;
+      left: 0;
+      text-align: center;
+    }*/
+  }
 }
 
-.datea-glyph {
-	background: @color-12;
-	border-radius: 50%;
-	color: white;
-	font-size: 15px;
-	line-height: 23px;
-	text-align: center;
-	width: 23px!important;
-	top: -2px;
-}
 
 .datea-loading:after {
 	content: " ";
@@ -137,7 +207,7 @@
 
 .datea-btn {
   .datea-button-variant(@datea-btn-color; @datea-btn-bg; @datea-btn-border; @datea-btn-hover);
-  padding-top: 10px;
+  //padding-top: 10px;
   text-transform: uppercase;
 }
 
@@ -155,34 +225,124 @@
 .datea-btn-xs {
 	height: 17px;
 	padding-top: 0;
+  margin-right: 10px;
+  margin-bottom: 3px;
+  &:last-child {
+    margin-right: 0;
+  }
 }
 
 .datea-tag-btn {
 	background: none;
 	border: none;
+  margin-right: 10px;
+  margin-bottom: 3px;
+  &:last-child {
+    margin-right: 0;
+  }
 }
 
 // Navbar
 
-.datea-navbar {
+.datea-navbar.navbar-default {
+  background-color: @gray-light-1;
+  border-radius: 0;
 	margin-bottom: 0;
 	z-index: 1;
+  height: @navbar-height;
+  positive: relative;
+
+  .container-fluid {
+    margin-left: 5px;
+    padding-left: 0;
+  }
+
+  .navbar-brand {
+    margin: 0;
+    padding: 0;
+    line-height: @navbar-height;
+    font-size: 22px;
+    color: black;
+    z-index: 10005;
+    position: relative;;
+    .nav-title {
+      position: relative;
+      top: 2px;
+      margin-left: 3px;
+    }
+  }
+
+  .btn.btn-icon {
+    background-color: transparent;
+    height: @navbar-height - 1px;
+    line-height: @navbar-height - 1px;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    border: 0;
+    border-radius: 0;
+    color: @gray-light-3;
+    &:hover {
+      background-color: white;
+      color: @gray-light-3;
+    }
+    .glyphicon, .fa {
+      font-size: 24px;
+    }
+    outline: none;
+  }
+
+  .btn-datear {
+    .datea-icon {
+      font-size: 24px;
+    }
+    font-size: 18px;
+    line-height: 22px;
+    padding: 6px 6px 6px 12px;
+    margin-top: 5px;
+    margin-right: 15px;
+    &:hover {
+      background-color: #EDFF00;
+      color: black;
+    }
+  }
 
 	.nav-arrows-holder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
 		display: block;
-		left: 50%;
 		position: absolute;
-		width: 110px;
+    .btn {
+      font-size: 12px;
+      width: 100px;
+      font-weight: normal;
+      line-height: @navbar-height;
+      .glyphicon, .fa {
+        position: relative;
+        top: 5px;
+      }
+      .glyphicon-chevron-left {
+        margin-right: 3px;
+      }
+      .glyphicon-chevron-right {
+        margin-left: 3px;
+      }
+    }
 	}
 }
 .navicon-panel {
 	.make-sm-column(3);
 	background: white;
-	height: 434px;
 	padding: 15px;
 	position: absolute;
 	right: 0;
-	top: 50px;
+	top: @navbar-height;
+  bottom: @footer-height;
+  z-index: 10000;
 
 	.visualization-radios-holder {
 		list-style: none;
@@ -202,14 +362,53 @@
 	}
 }
 .info-panel {
-	background: rgba(255,255,255,.9);
-	padding: 15px;
+  padding: 15px;
+  background-color: @gray-light-1;
+  .inner-content {
+    .close { font-size: 32px; position: relative; top: -10px;}
+    background: rgba(255,255,255,1);
+    padding: 15px;
+    .user-head {
+      .user-info {
+        .intro-line { font-size: 12px; margin-top: 5px}
+        .username { font-size: 17px; margin-top: 0px}
+      }
+    }
+    h2 { margin-bottom: 3px;}
+    .short-description { margin-top:10px; color: lighten(@text-gray-1, 5%)}
+    .datea-glyph-holder {
+      margin-right: 20px;
+    }
+
+    .stats-holder {
+      .datea-glyph-holder {
+        color: black;
+        font-size: 15px;
+      }
+    }
+
+    .extra-info-holder {
+        h4 { font-size: 13px; margin-bottom: 5px; margin-top: 20px}
+        p { color: lighten(@text-gray-1, 5%)}
+    }
+
+    .cta-holder {
+      padding-top: 10px;
+      .help-info {
+        margin-left: 15px;
+        color: lighten(@text-gray-1, 10%);
+      }
+    }
+
+  }
+
 	position: absolute;
 	top: 0;
 	bottom: 0;
 	right: 0;
 	left: 0;
-	z-index: 9000;
+	z-index: 10000;
+  overflow-y: auto;
 
 	// Animations
 	&.ng-hide-remove {
@@ -232,13 +431,13 @@
 
 // Teaser panel
 .teaser-panel {
-	.make-sm-column(5);
-	background: white;
-	height: 380px;
-	overflow: scroll;
-	padding: 15px;
+	background: rgba(255, 255, 255, 0.8);
+	height: auto;
+	overflow-y: scroll;
+  overflow-x: hidden;
+	padding: 0px 10px 0;
 	position: absolute;
-	top: 50px;
+	top: @navbar-height;
 	z-index: 9000;
 
 	// Animations
@@ -253,20 +452,9 @@
 	}
 
 	.teaser-holder {
-
 		.user-img {
-			height: 50px;
-			width: 50px;
-		}
-		.tags-holder {
-			list-style: none;
-			margin: 0;
-			padding: 0;
-
-			.tag {
-				display: inline-block;
-				vertical-align: top;
-			}
+			height: 42px;
+			width: 42px;
 		}
 
 		.stats-holder {
@@ -275,18 +463,93 @@
 			width: 210px;
 		}
 
+    .content {
+      font-size: 13px;
+    }
+
+    .action-btns {
+      margin-left: -15px;
+      margin-right: -15px;
+      a {
+        background-color: darken(white, 10%);
+        display: block;
+        float: left;
+        text-align: center;
+        width: 50%;
+        line-height: 35px;
+        border-right: 1px solid white;
+        &:last-child {
+          border-right: 0;
+        }
+        &:hover {
+          text-decoration: none;
+          background-color: darken(white, 20%);
+        }
+      }
+    }
 	}
+}
+
+.user-head {
+  .clearfix;
+  .user-img { height: 40px; width: 40px; float: left;}
+  .user-info {
+    margin-left: 10px;
+    float: left;
+    h4.username {
+      margin-bottom: 2px;
+      a {color: black}
+      margin-top: 6px;
+      font-size: @font-size-base;
+      font-weight: bold;
+      color: black;
+    }
+    .date {
+      font-size: 12px;
+      color: @text-gray-1;
+      a {
+        color: @text-gray-1;
+        &:hover {
+          color: darken(@text-gray-1, 15%);
+        }
+      }
+    }
+  }
+  .admin-info {
+    padding-top: 3px;
+    float:left;
+  }
+}
+
+.dateo {
+
+  .pin {
+    //position: absolute;
+    //right: 0;
+    //top: 0;
+    font-size: 28px;
+    line-height: 30px;
+    height: 30px;
+    width: 30px;
+    display: inline-block;
+    color: @gray-light-2;
+    &:hover {
+      color: @gray-light-3;
+      cursor: pointer;
+    }
+  }
+  .content { margin-top: 0 !important}
 }
 
 // Inside panel
 .inside-panel {
-	.make-sm-column(6);
+	//.make-sm-column(6);
 	background: white;
-	height: 434px;
-	overflow: scroll;
+	overflow-y: scroll;
 	padding: 15px;
 	position: absolute;
-	top: 50px;
+	top: @navbar-height;
+  bottom: @footer-height;
 	z-index: 9000;
 
 	// Animations
@@ -303,17 +566,22 @@
 	.inside-dateo-holder {
 
 		.user-img {
-			height: 50px;
-			width: 50px;
+			height: 42px;
+			width: 42px;
 		}
 
+    .tags-holder {
+      margin-top: 10px;
+    }
+
 		.imgs-holder {
+
 			.dateo-img {
 				cursor: pointer;
 				height: 100px;
 				position: relative;
-				width: 100px;
-
+				width: 110px;
+        margin: 10px 0;
 				&:hover:after {
 					background: rgba( 255,255,255,0.5 );
 					bottom: 0;
@@ -343,14 +611,6 @@
 		}
 
 		.tags-holder {
-			list-style: none;
-			margin: 0;
-			padding: 0;
-
-			.tag {
-				display: inline-block;
-				vertical-align: top;
-			}
 		}
 
 		.stats-holder {
@@ -361,7 +621,7 @@
 		.url-holder {
 			display: inline-block;
 			vertical-align: top;
-			width: 150px;
+			//width: 150px;
 		}
 	}
 }
@@ -374,7 +634,7 @@
 	height: 55px;
 	padding: 10px;
 	position: absolute;
-	right: 0;
+	right: 45px;
 	top: 50px;
 	z-index: 0;
 
@@ -402,6 +662,18 @@
 // Map visualization
 .map-holder {
 
+  position: absolute;
+  top: @navbar-height;
+  bottom: @footer-height;
+  left: 0;
+  right: 0;
+
+  .datea-leaflet-map {
+    height: 100%;
+  }
+
+  -webkit-transition: margin 0.25s;
+
 	// Animations
 	&.ng-hide-remove {
 		-webkit-animation: slideInLeft 0.4s;
@@ -417,8 +689,13 @@
 // DateoWithImages Visualization
 
 .dwimgs-holder {
-	height: 450px;
-	overflow: scroll;
+  position: absolute;
+  top: @navbar-height;
+  bottom: @footer-height;
+  left: 0;
+  right: 0;
+	overflow-y: scroll;
+  .clearfix;
 
 	// Animations
 	&.ng-hide-remove {
@@ -485,13 +762,12 @@
 
 // Stats visualization
 .charts-holder {
-	height: 425px;
-	width: 100%;
+	.inner {
+    padding: 15px 20px;
+    .vis-simple-chart { height: 400px; width: 100%}
+  }
 
 	.chart {
-		height: 320px;
-		width: 80%;
-
 		.ac-legend {
 			overflow: hidden;
 			position: absolute;
@@ -508,37 +784,312 @@
 // Footer - Legend
 
 .footer-holder {
-	height: 20px;
-	position: relative;
+	height: @footer-height;
+	position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
 	overflow: hidden;
+  background-color: @gray-light-1;
+  padding: 0px 5px;
 
 	&.expandable {
-		background: white;
-		position: relative;
+		//background: white;
+		position: absolute;
 		z-index: 9999;
 	}
-	.expand-text {
-		left: 94%;
-		position: relative;
-		width: 120px;
-		z-index: 10;
-	}
-	.expand-text:hover {
-		cursor: pointer;
-		text-decoration: underline;
-	}
+
+  &.expanded {
+    height: auto !important;
+  }
+
+  .legend-expand-link {
+    float: right;
+    display: none;
+    font-size: 13px;
+    line-height: @footer-height;
+  }
+
+  &.expandable {
+    .legend-expand-link {
+      display: block !important;
+    }
+  }
 
 	.legend-holder {
 		position: relative;
-		top: -20px;
+		top: 0px;
+    .legend-tags {
+      line-height: @footer-height;
+      .legend-tag {
+        font-size: 12px;
+        margin-right: 10px;
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
 		.color-holder {
+      position: relative;
+      top: 4px;
 			display: inline-block;
-			height: 20px;
-			width: 20px;
+			height: 15px;
+			width: 15px;
 		}
 	}
 }
 
+.leaflet-control-attribution {
+  font-size: 9px !important;
+  color: @gray-light-3;
+  a {color: @gray-light-3}
+}
+
 .toRed {
 	background-color: red;
+}
+
+.datea-loading:after {
+  //background: rgba(255,255,255,.5) url('@{imgUrl}/globals/loading.gif') no-repeat center center;
+  content: " ";
+  background-color: rgba(255,255,255,.7);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 1000;
+}
+.datea-loading-icon {
+  display: none;
+}
+.datea-loading {
+  .datea-loading-icon {
+    z-index: 10001;
+    display: block;
+    font-size: 40px;
+    line-height: 40px;
+    .icon-loading {
+      position: relative;
+      top: 20px;
+      line-height: 40px;
+      width: 40px;
+      height: 0.884em;
+      display: inline-block;
+      vertical-align: top;
+    }
+    position: fixed;
+    color: @gray-light-2;
+    top: ~"calc(50% - 20px)";
+    left: 0;
+    right: 0;
+    text-align: center;
+  }
+}
+
+.dateo-thumbs-holder {
+  padding: 1px;
+  min-height: 300px;
+  .clearfix;
+
+  .dateo-thumb {
+    position: relative;
+    //width: 16.66%; -> setting with media queries below
+    float: left;
+    color: darken(@text-gray-1 , 15%);
+
+    .inner {
+      padding-top: 87%;
+      position: relative;
+
+      .img-holder {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border: 3px solid white;
+        z-index: 0;
+      }
+
+      .info-holder {
+        display: none;
+        padding: 10px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 2;
+
+        .extract {
+          font-size: 14px;
+          padding-top: 10px;
+          padding-bottom: 40px;
+          overflow: none;
+        }
+        .part-1 {
+          width: 38px;
+        }
+        .part-2 {
+          width: 160px;
+          h5 {
+            color: black;
+            font-size: 14px;
+            font-weight: bold;
+            margin: 3px 0 0;
+          }
+          .date {
+            color: @text-gray-1;
+            font-size: 12px;
+          }
+        }
+        .user-img {
+          height: 35px;
+          width: 35px;
+        }
+        .stat-holder {
+          position: absolute;
+          bottom: 10px;
+          left: 10px; right: 10px;
+          .stat {
+            color: black;
+            margin-right: 10px;
+            &:last-child {
+              margin-right: 0;
+            }
+          }
+        }
+      }
+      .info-bg {
+        background: rgba(255,255,255, 0.9);
+        display: none;
+        position: absolute;
+        left: 0; right: 0; top: 0; bottom: 0;
+        z-index: 1;
+      }
+    }
+  }
+  .dateo-thumb:hover {
+
+    .info-holder {
+      display: block;
+    }
+    .info-bg {
+      display: block;
+    }
+  }
+}
+
+// RESPONSIVE DATEOS WITH IMAGES
+@media (max-width: 664px) {
+  .dateo-thumbs-holder .dateo-thumb { width: 50%;}
+}
+@media (min-width: 665px) {
+  .dateo-thumbs-holder .dateo-thumb { width: 33.33%;}
+}
+@media (min-width: 885px) {
+  .dateo-thumbs-holder .dateo-thumb { width: 25%;}
+}
+@media (min-width: 1110px) {
+  .dateo-thumbs-holder .dateo-thumb { width: 20%;}
+}
+@media (min-width: 1340px) {
+  .dateo-thumbs-holder .dateo-thumb { width: 16.66%;}
+}
+@media (min-width: 1570px) {
+  .dateo-thumbs-holder .dateo-thumb { width: 14.285%;}
+}
+@media (min-width: 1800px) {
+  .dateo-thumbs-holder .dateo-thumb { width: 12.5%;}
+}
+
+.datea-btn {
+  .datea-button-variant(@datea-btn-color; @datea-btn-bg; @datea-btn-border; @datea-btn-hover);
+  //padding-top: 10px;
+  //text-transform: uppercase;
+  font-weight: bold;
+
+  &.btn-xs {
+    padding: 2px 10px !important;
+  }
+  &.btn-sm {
+    font-size: 13px !important;
+  }
+}
+
+.comments-holder {
+
+  padding: 30px 15px 40px 5px;
+
+  h3 {
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 14px; margin-bottom: 20px;
+    font-weight: normal;
+    color: @gray-light-3;
+  }
+
+  .comment-form-holder {
+    padding-top: 10px;
+  }
+
+  div.comment-holder {
+
+    margin: 0 0 30px 0;
+    position: relative;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    border-bottom: 1px dashed @gray-light-5;
+
+    &.slidedown {
+      display: none;
+    }
+
+    &:last-child {
+      border-bottom: none !important;
+      margin-bottom: 0;
+    }
+
+    &:hover {
+      .denounce-holder { display: block;}
+    }
+
+    .user {
+      img {
+        height: 30px;
+        width: 30px;
+        margin: 0 5px 0 0;
+      }
+      a {
+        color: black;
+        font-weight: normal;
+        margin: 0 5px 0 0;
+      }
+      .date {
+        color: @gray-light-3;
+        font-size: 12px;
+      }
+    }
+    /*
+    .denounce-holder {
+      display: none;
+      position: absolute;
+      width: 100%;
+      bottom: 3px;
+      text-align: right;
+      .btn-link.flag-btn {
+        color: @color-20;
+        font-size: 11px;
+        &:hover { color: red}
+      }
+    }*/
+
+    .comment-content {
+      font-size: 13px;
+      margin-top: 0px;
+      margin-left: 38px;
+
+    }
+  }
 }

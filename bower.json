@@ -29,5 +29,16 @@
     "angular-mocks": "1.2.16",
     "angular-scenario": "1.2.16"
   },
+  "overrides": {
+    "leaflet.markerclusterer": {
+        "main": "dist/leaflet.markercluster.js"
+    },
+    "Leaflet.label": {
+        "main": "dist/leaflet.label.js"
+    },
+    "angular-i18n": {
+        "main": "angular-locale_es-pe.js"
+     }
+  },
   "appPath": "app"
 }
