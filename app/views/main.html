@@ -11,15 +11,15 @@
 			</div>
 			<div class="nav-arrows-holder" ng-show="main.vis.showMap">
 				<button type="button" class="btn btn-icon btn-default btn-lg" ng-click="main.navArrows.prev()">
-					<i class="fa fa-chevron-left"></i> anterior
+					<i class="fa fa-chevron-left"></i><span class="btn-label"> anterior</span>
 				</button>
 				<button type="button" class="btn btn-icon btn-default btn-lg" ng-click="main.navArrows.next()">
-					siguiente <i class="fa fa-chevron-right"></i>
+					<span class="btn-label">siguiente </span><i class="fa fa-chevron-right"></i>
 				</button>
 			</div>
 			<ul class="nav navbar-nav navbar-right">
 				<li>
-          <a class="btn btn-datear btn-default" href="{{main.campaignUrl}}" target="_blank" data-toggle="tooltip" title="Datear en datea.pe">DATEA <i class="datea-icon icon-burbuja"></i></a>
+          <a class="btn btn-datear btn-default" href="{{main.campaignUrl}}" target="_blank" data-toggle="tooltip" title="Datear en datea.pe"><span class="btn-label">Datea </span><i class="datea-icon icon-burbuja"></i></a>
         </li>
         <li>
 					<button type="button" class="btn btn-icon btn-default btn-lg" ng-click="main.nav.toggleSearchBoxPanel()">
@@ -127,48 +127,55 @@
 	</div>
 	<div class="info-panel" ng-show="main.nav.showInfoPanel">
     <div class="inner-content">
-  		<button type="button" class="close pull-right" ng-click="main.nav.toggleInfoPanel()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-  		<div class="info-holder">
-  			<div class="user-head">
-          <img class="user-img img-circle" ng-src="{{main.campaign.user.image_small ? main.imgUrl + main.campaign.user.image_small : main.defaultImgProfile}}"/>
-          <div class="user-info">
-            <div class="intro-line">una iniciativa de</div>
-            <h4 class="username"><a href="{{main.redirUrl}}{{main.campaign.user.username}}" target="_blank">{{main.campaign.user.username}}</a></h4>
-          </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-8 col-lg-7">
+      		<div class="info-holder">
+      			<div class="user-head">
+              <img class="user-img img-circle" ng-src="{{main.campaign.user.image_small ? main.imgUrl + main.campaign.user.image_small : main.defaultUserImg }}"/>
+              <div class="user-info">
+                <div class="intro-line">una iniciativa de</div>
+                <h4 class="username"><a href="{{main.redirUrl}}{{main.campaign.user.username}}" target="_blank">{{main.campaign.user.username}}</a></h4>
+              </div>
+            </div>
+      			<div class="main-info-holder">
+      				<h2>{{main.campaign.name}}</h2>
+      				<a class="main-tag" href="{{main.redirUrl + 'tag/' + main.campaign.main_tag.tag}}">#{{main.campaign.main_tag.tag}}</a>
+      				<p class="short-description">{{main.campaign.short_description}}</p>
+      			</div>
+      			<div class="stats-holder">
+      				<div class="datea-glyph-holder">
+      					<i class="datea-icon icon-burbuja"></i> <span class="datea-glyph-text"><span class="num">{{main.campaign.dateo_count}}</span> <span class="num-label"><ng-pluralize count="main.campaign.dateo_count" when="{'one':'dateo','other':'dateos'}"></ng-pluralize></span></span>
+      				</div>
+      				<div class="datea-glyph-holder">
+      					<i class="fa fa-user"></i> <span class="datea-glyph-text"><span class="num">{{main.campaign.follow_count}}</span> <span class="num-label"><ng-pluralize count="main.campaign.follow_count" when="{'one':'seguidor','other':'seguidores'}"></ng-pluralize></span></span>
+      				</div>
+      			</div>
+      			<div class="extra-info-holder">
+      				<h4>Objetivos</h4>
+      				<p>{{main.campaign.mission}}</p>
+      				<h4>Qué pasará con la información?</h4>
+      				<p>{{main.campaign.information_destiny}}</p>
+      			</div>
+      			<div class="cta-holder">
+              <button type="button" class="btn btn-default" ng-click="main.nav.toggleInfoPanel()"><i class="fa fa-times"></i> cerrar</button> &nbsp;
+              <a href="{{main.redirUrl + main.campaign.user.username + '/' + main.campaign.main_tag.tag }}" class="btn datea-btn">Ver en Datea</a>
+              <span class="help-info ng-hide">para datear y acceder a la versión completa.</span>
+      			</div>
+      		</div>
         </div>
-  			<div class="main-info-holder">
-  				<h2>{{main.campaign.name}}</h2>
-  				<a class="main-tag" href="{{main.redirUrl + 'tag/' + main.campaign.main_tag.tag}}">#{{main.campaign.main_tag.tag}}</a>
-  				<p class="short-description">{{main.campaign.short_description}}</p>
-  			</div>
-  			<div class="stats-holder">
-  				<div class="datea-glyph-holder">
-  					<i class="datea-icon icon-burbuja"></i> <span class="datea-glyph-text"><span class="num">{{main.campaign.dateo_count}}</span> <span class="num-label"><ng-pluralize count="main.campaign.dateo_count" when="{'one':'dateo','other':'dateos'}"></ng-pluralize></span></span>
-  				</div>
-  				<div class="datea-glyph-holder">
-  					<i class="fa fa-user"></i> <span class="datea-glyph-text"><span class="num">{{main.campaign.follow_count}}</span> <span class="num-label"><ng-pluralize count="main.campaign.follow_count" when="{'one':'seguidor','other':'seguidores'}"></ng-pluralize></span></span>
-  				</div>
-  			</div>
-  			<div class="extra-info-holder">
-  				<h4>Objetivos</h4>
-  				<p>{{main.campaign.mission}}</p>
-  				<h4>Qué pasará con la información?</h4>
-  				<p>{{main.campaign.information_destiny}}</p>
-  			</div>
-  			<div class="cta-holder">
-          <button type="button" class="btn btn-default" ng-click="main.nav.toggleInfoPanel()"><i class="glyphicon glyphicon-chevron-left"></i> regresar</button> &nbsp;
-          <a href="{{main.redirUrl + main.campaign.user.username + '/' + main.campaign.main_tag.tag }}" class="btn datea-btn">Ver en Datea</a>
-          <span class="help-info">para datear y acceder a la versión completa.</span>
-  			</div>
-  		</div>
+        <div class="col-xs-12 col-sm-4 col-lg-5">
+          <button type="button" class="close pull-right" ng-click="main.nav.toggleInfoPanel()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <div class="campaign-image" bg-from-api="{{main.campaign.image.image}}" img-type="campaign" img-size="contain"></div>
+        </div>
+      </div>
     </div>
 	</div>
-	<div class="teaser-panel col-xs-12 col-sm-5 col-md-4 col-lg-3" ng-show="main.nav.showTeaserPanel">
+	<div class="teaser-panel col-xs-6 col-sm-5 col-md-4 col-lg-3" ng-show="main.nav.showTeaserPanel">
 		<button type="button" class="close pull-right" ng-click="main.nav.showTeaserPanel = false"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 		<div class="teaser-holder dateo dateo-teaser">
 			<h5>Último dateo</h5>
 			<div class="user-head">
-        <img class="user-img img-circle" ng-src="{{main.dateoTeaser.user.image_small ? main.imgUrl + main.dateoTeaser.user.image_small : main.defaultImgProfile}}"/>
+        <img class="user-img img-circle" ng-src="{{main.dateoTeaser.user.image_small ? main.imgUrl + main.dateoTeaser.user.image_small : main.defaultUserImg }}" />
         <div class="user-info">
           <h4 class="username"><a href="{{main.redirUrl}}{{main.dateoTeaser.user.username}}" target="_blank">{{main.dateoTeaser.user.username}}</a></h4>
           <div class="date"><a href="{{main.redirUrl}}{{main.dateoTeaser.user.username}}/dateos/{{main.dateoTeaser.id}}" target="_blank">{{main.dateoTeaser.created | date:dateFormat}}</a></div>
@@ -197,12 +204,12 @@
       </div>
 		</div>
 	</div>
-	<div class="inside-panel col-xs-12 col-sm-6 col-md-5 col-lg-4" ng-class="{ 'datea-loading': main.loading.currentDateoInsideIsLoaded }" ng-show="main.nav.showInsidePanel">
+	<div class="inside-panel col-xs-6 col-sm-6 col-md-5 col-lg-4" ng-class="{ 'datea-loading': main.loading.currentDateoInsideIsLoaded }" ng-show="main.nav.showInsidePanel">
 		<button type="button" class="close pull-right" ng-click="main.nav.toggleInsidePanel()"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 		<div class="inside-dateo-holder dateo dateo-detail">
 
       <div class="user-head">
-        <img class="user-img img-circle" ng-src="{{main.currentDateoInside.user.image_small ? main.imgUrl + main.currentDateoInside.user.image_small : main.defaultImgProfile}}"/>
+        <img class="user-img img-circle" ng-src="{{main.currentDateoInside.user.image_small ? main.imgUrl + main.currentDateoInside.user.image_small : main.defaultUserImg }}"/>`
         <div class="user-info">
           <h4 class="username"><a href="{{main.redirUrl}}{{main.currentDateoInside.user.username}}">{{main.currentDateoInside.user.username}}</a></h4>
           <div class="date"><a href="{{main.redirUrl}}{{main.currentDateoInside.user.username}}/dateos/{{main.currentDateoInside.id}}">{{main.currentDateoInside.created | date:dateFormat}}</a></div>

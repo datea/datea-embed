@@ -7,6 +7,8 @@
 @import "../../bower_components/Leaflet.awesome-markers/dist/leaflet.awesome-markers.css";
 @import "fontcustom.css";
 
+@grid-float-breakpoint: 1px;
+
 .awesome-marker {
   background: url('../images/markers-soft.png') no-repeat 0 0;
 }
@@ -321,6 +323,7 @@ a {
       width: 100px;
       font-weight: normal;
       line-height: @navbar-height;
+
       .glyphicon, .fa {
         position: relative;
         top: 5px;
@@ -334,6 +337,55 @@ a {
     }
 	}
 }
+
+@media (max-width: @screen-sm-min) {
+  .datea-navbar.navbar-default {
+    .container-fluid {
+      .navbar-header {
+        margin-left: 0;
+        .navbar-brand {
+          font-size: 19px;
+        }
+      }
+      .nav-arrows-holder {
+        .btn {
+          width: 40px;
+          padding: 0 8px;
+          .btn-label {
+            display: none;
+          }
+        }
+      }
+      .btn {
+        padding: 0 9px;
+      }
+
+      .btn-datear {
+        .btn-label { display: none}
+        border: 0;
+        background-color: transparent;
+        color: @gray-light-3;
+        .datea-icon {
+          font-size: 26px;
+          position: relative;
+          top: -1px;
+        }
+        &:hover {
+          background-color: white;
+          color: @gray-light-3;
+        }
+        margin-top: 0;
+        line-height: @navbar-height - 1px;
+        height: @navbar-height - 1px;
+        border-radius: 0;
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+
+
 .navicon-panel {
 	.make-sm-column(3);
 	background: white;
@@ -350,16 +402,6 @@ a {
 		padding: 0;
 	}
 
-	// Animations
-	&.ng-hide-remove {
-		-webkit-animation: slideInRight 0.4s;
-		animation: slideInRight 0.4s;
-	}
-	&.ng-hide-add {
-		-webkit-animation: slideOutRight 0.4s;
-		animation: slideOutRight 0.4s;
-		display: block !important;
-	}
 }
 .info-panel {
   padding: 15px;
@@ -375,7 +417,7 @@ a {
       }
     }
     h2 { margin-bottom: 3px;}
-    .short-description { margin-top:10px; color: lighten(@text-gray-1, 5%)}
+    .short-description { margin-top:10px; color: lighten(@text-gray-1, 5%); margin-bottom: 15px;}
     .datea-glyph-holder {
       margin-right: 20px;
     }
@@ -398,6 +440,12 @@ a {
         margin-left: 15px;
         color: lighten(@text-gray-1, 10%);
       }
+    }
+
+    .campaign-image {
+      padding-top: 70%;
+      width: 100%;
+      clear: right;
     }
 
   }

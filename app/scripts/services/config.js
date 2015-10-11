@@ -11,13 +11,13 @@
 angular.module('dateaEmbedApp')
 .constant('config',
 { app : { name : 'Datea.pe/embed'
-        , url  : 'http://127.0.0.1:9000/'
+        , url  : 'http://embed.datea.pe/'
         , redirUrl : 'http://datea.pe/#!/'
         }
-, api : { /*url    : 'http://173.255.200.68/api/v2/'
-        , imgUrl : 'http://173.255.200.68/'*/
-          url    : 'http://127.0.0.1:8000/api/v2/'
-        , imgUrl : 'http://127.0.0.1:8000'
+, api : { url    : 'https://api.datea.io/api/v2/'
+        , imgUrl : 'https://api.datea.io'
+        /*  url    : 'http://127.0.0.1:8000/api/v2/'
+        , imgUrl : 'http://127.0.0.1:8000'*/
         }
 , charts : { pie : { title       : 'Estadísticas'
                    , tooltips    : true

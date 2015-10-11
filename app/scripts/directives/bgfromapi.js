@@ -13,11 +13,13 @@ angular.module('dateaEmbedApp')
 		link: function postLink(scope, element, attrs) {
 			var img
         , imgType
+        , imgSize
         , defaultImg
 			  , setImg
 			  ;
 
       imgType = attrs.imgType;
+      imgSize = attrs.imgSize || 'cover';
 
       if (imgType === 'user') {
         defaultImg = config.defaultImgProfile;
@@ -34,7 +36,7 @@ angular.module('dateaEmbedApp')
 			attrs.$observe( 'bgFromApi', function () {
 				setImg();
 				element.css( { 'background': 'url('+img+') no-repeat center center'
-				             , 'background-size': 'cover'
+				             , 'background-size': imgSize
 				             } );
 			} );
 		}
