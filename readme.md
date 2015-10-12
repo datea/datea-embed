@@ -8,7 +8,7 @@ Datea is a corwdsourcing and civic engagement platform for citizen reports, whic
 
 If you are interested in using or contributing to this project, or want toknow a litle bit more about us or the plattform, please feel free to contact us at contacto@datea.pe or via gitter (datea-gitter channel).
 
-If interested in in a deployment or new feature, we also provide commercial support.
+If interested in special a deployment or new feature, we also provide commercial support.
 
 The Datea Team
 
