@@ -4,38 +4,26 @@ Datea Embed
 
 #Datea
 
-A django based crowdsourcing and civic engagement framework,
-currently supporting community driven maps of reports. It was designed to
-include other participatory dynamics in the future.
+Datea is a corwdsourcing and civic engagement platform for citizen reports, which can be visualized in maps, picture galleries, timelines and charts. It's mail goal is to allow citizens to share and visualize useful information for any purpose. It's flexibel structure based on hashtags allows anyone to create map, timeline or gallery by using a hashtag when creating a report (dateo). Furthermore, report iniciatives can be created by organizations such as NGOs, local governments and activists, which allow them to campaign for certain issues in order to obtain useful information from users.    
 
-This is our first beta release. Any feedback is welcomed. Instructions and
-more information will come at a later date.
+If you are interested in using or contributing to this project, or want toknow a litle bit more about us or the plattform, please feel free to contact us at contacto@datea.pe or via gitter (datea-gitter channel).
 
-If you are interested in using or contributing to this project,
-or want toknow a litle bit more about us or the plattform,
-please feel free to contact us at contacto@datea.pe
-
-Basic install instructions for local development can be found at INSTALL.txt
-
-If you want to know a little bit more about the installation
-requirements, you can take a look at the datea/requirements folder.
-
-If interested in in a deployment or new feature, we also provide
-commercial support.
+If interested in in a deployment or new feature, we also provide commercial support.
 
 The Datea Team
 
 #Datea Embed
 
-This repo is specifically for the Embed, current technologies are listed below:
+This embed supports report iniciatives, with a limited set of features compared to the web (no user login or creation of reports/dateos). If you'd like to extend the features, please let us know. 
 
-* angularJS
-* yeoman
-* bower
-* grunt
-* bootstrap
-* less
-* leaflet
+To install and run it in a local dev environment:
+
+1. Make sure you got grunt and bower installed: (sudo) npm install -g grunt bower
+2. Install dependencies: bower install
+3. Run to start local dev server: grunt serve
+
+To compile: grunt build
+
 
 #Coding Style
 
