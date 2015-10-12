@@ -1,7 +1,3 @@
-=====
-Datea Embed
-=====
-
 #Datea
 
 Datea is a corwdsourcing and civic engagement platform to create and visualize citizen reports (dateos) in maps, picture galleries, timelines and charts. It's mail goal is to allow citizens to share and visualize useful information for any purpose. It's flexibel, hashtag based structure allows anyone to create a map, timeline or gallery just by creating a report (dateo) using a hashtag. Furthermore, report iniciatives can be created by organizations such as NGOs, local governments and activists, which allow them to campaign for certain issues in order to obtain useful information from citizens (dateros).    
@@ -12,7 +8,7 @@ The Datea Team
 
 #Datea Embed
 
-This embed supports report iniciatives, with a limited set of features compared to the web (no user login or creation of reports/dateos). If you'd like to extend the features, please let us know. 
+This embed code supports report iniciatives, with a limited set of features compared to the web (no user login or creation of reports/dateos). If you'd like to extend the features, please let us know. More embed codes could come in the future.
 
 To install and run it in a local dev environment:
 
