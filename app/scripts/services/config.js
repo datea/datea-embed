@@ -64,10 +64,10 @@ angular.module('dateaEmbedApp')
                , markers     : {}
                , defaultIcon : {}
                , focusedIcon : { type: 'awesomeMarker', icon: 'tag', markerColor: 'red' }
-               , tiles    : { url     : 'http://{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.png'
-                            , options : { attribution : 'Tiles by <a href="http://www.mapquest.com/">MapQuest</a> &mdash; Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
-                                        , subdomains  : ['otile1','otile2','otile3','otile4']
-                                        }
+               , tiles    : { url     : 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+                            , options : {
+                                attribution : 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+                              }
                             }
                }
 , defaultImgProfile           : 'images/globals/user-default.png'
